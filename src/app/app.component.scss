@@ -1,0 +1,41 @@
+@import 'app/vars.scss';
+@import 'app/prime-style.scss';
+
+:host {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+.content {
+  margin-top: $navbarHeight;
+  padding: $contentPaddingHeight 60px $contentPaddingBottom;
+  min-height: calc(100vh - #{$navbarHeight} - #{$contentPaddingHeight} - #{$contentPaddingBottom});
+}
+
+.container {
+  margin: auto;  
+  max-width: 1200px;
+}
+
+.admin-key {
+  background: linear-gradient(hsla(0,0%,90%,.8),hsla(0,0%,90%,.8));
+  border: 2px solid rgb(252, 182, 78);
+  text-align: left;
+  padding: 10px;
+  margin-bottom: 30px;
+  
+  > span {
+    margin: 0 20px;
+  }
+
+  > input {
+    width: 60%;
+    max-width: 200px;
+  }
+}
+
+.table-container {
+  background: linear-gradient(hsla(0,0%,90%,.8),hsla(0,0%,90%,.8));
+  border: 2px solid rgb(90, 185, 187);
+}
