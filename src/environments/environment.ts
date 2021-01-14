@@ -6,7 +6,10 @@ import * as pass from "./pass.json";
 export const environment = {
   production: false,
   apiKey: pass.apiKey,
-  account: pass.credential
+  account: pass.db.credential,
+  host: "192.168.39.1",
+  port: 32824,
+  db: pass.db.dbName
 };
 
 /*
