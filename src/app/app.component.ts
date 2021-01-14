@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GetBoothSortParam } from './core/types/GetBoothSortParam';
+import { PlayHistorySortParam } from './core/types/PlayHistorySortParam';
 import { SortOption } from './core/types/SortOption';
 
 @Component({
@@ -9,36 +9,54 @@ import { SortOption } from './core/types/SortOption';
 })
 export class AppComponent {
   title = 'djyurika-ddj400';
+  
   public apiKey: string = '';
   
-  public readonly Sort = GetBoothSortParam;
-  public sortByNameParam: GetBoothSortParam;
-  public sortByAliasParam: GetBoothSortParam;
+  public authenticated: boolean = false;
+  public authFailed: boolean = false;
+  
+  public readonly Sort = PlayHistorySortParam;
+  public filterByReviewedParam: PlayHistorySortParam;
+  public sortByTitleParam: PlayHistorySortParam;
+  public sortByCreatedDateParam: PlayHistorySortParam;
+  public sortByPickCountParam: PlayHistorySortParam;
 
-  public currentPageNumber: number;
+  public dropdownStyle = {
+    "width": '150px'
+  };
+  public checkValue: SortOption[];
 
-  public sortByNameOption: SortOption[];
-  public sortByAliasOption: SortOption[];
+  public filterByReviewedOption: SortOption[];
+  public sortByTitleOption: SortOption[];
+  public sortByCreatedDateOption: SortOption[];
+  public sortByPickCountOption: SortOption[];
 
-  public sortParam: GetBoothSortParam[] = [];
+  public sortParam: PlayHistorySortParam[] = [];
 
   public constructor() {
-    this.sortByNameOption = [
-      { label: 'MARKET.BOOTH.SORT_NONE', value: null },
-      { label: 'MARKET.BOOTH.SORT_ASC', value: this.Sort.NAME_ASC },
-      { label: 'MARKET.BOOTH.SORT_DESC', value: this.Sort.NAME_DESC }
+    this.filterByReviewedOption = [
+      { label: '모두보기', value: null },
+      { label: '확인완료', value: this.Sort.FILTER_CHECKED },
+      { label: '미확인', value: this.Sort.FILTER_UNCHECKED }
     ];
-    this.sortByAliasOption = [
-      { label: 'MARKET.BOOTH.SORT_NONE', value: null },
-      { label: 'MARKET.BOOTH.SORT_ASC', value: this.Sort.ALIAS_ASC },
-      { label: 'MARKET.BOOTH.SORT_DESC', value: this.Sort.ALIAS_DESC }
-    ]
+    this.sortByTitleOption = [
+      { label: '해당없음', value: null },
+      { label: '오름차순', value: this.Sort.ASC },
+      { label: '내림차순', value: this.Sort.DESC }
+    ];
+    this.sortByCreatedDateOption = [
+      { label: '해당없음', value: null },
+      { label: '오름차순', value: this.Sort.ASC },
+      { label: '내림차순', value: this.Sort.DESC }
+    ];
+    this.sortByPickCountOption = [
+      { label: '해당없음', value: null },
+      { label: '오름차순', value: this.Sort.ASC },
+      { label: '내림차순', value: this.Sort.DESC }
+    ];
   }
 
-  public applySort(pageNumber: number) {
-    this.sortParam.length= 0; // clear array
-    if (this.sortByAliasParam) { this.sortParam.push(this.sortByAliasParam); }
-    if (this.sortByNameParam) { this.sortParam.push(this.sortByNameParam); }
-    //this.fetchData(pageNumber);
+  public search() {
+
   }
 }

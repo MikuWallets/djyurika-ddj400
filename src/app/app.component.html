@@ -2,17 +2,19 @@
 <div class="content">
   <div class="container">
     <div class="admin-key">
-      <span>Admin Key:</span>
-      <input type="text" pInputText [(ngModel)]="apiKey" />
-    </div>
-    <div class="table-container">
+      <div>
+        <span>Admin Key</span>
+        <input type="password" pPassword [(ngModel)]="apiKey" [feedback]="false" />
+        <button pButton type="button" label="Search" (click)="search()"></button>
+        <div *ngIf="authFailed" class="failed">Authentication failed</div>
+      </div>
       <div class="sort-option-container">
         <div class="option-title">
-          정렬 옵션
+          Search Options
         </div>
         <div class="sort-option">
-          <div style="display: inline; padding: 0 10px;">부스 번호</div>
-          <p-dropdown [options]="sortByAliasOption" [(ngModel)]="sortByAliasParam" (ngModelChange)="applySort(currentPageNumber || 1)">
+          <span class="option-text">확인여부</span>
+          <p-dropdown [options]="filterByReviewedOption" [(ngModel)]="filterByReviewedParam" [style]="dropdownStyle">
             <ng-template pTemplate="item" let-item>
               {{ item.label }}
             </ng-template>
@@ -22,8 +24,30 @@
           </p-dropdown>
         </div>
         <div class="sort-option">
-          <div style="display: inline; padding: 0 10px;">부스 이름</div>
-          <p-dropdown [options]="sortByNameOption" [(ngModel)]="sortByNameParam" (ngModelChange)="applySort(currentPageNumber || 1)">
+          <span class="option-text">제목</span>
+          <p-dropdown [options]="sortByTitleOption" [(ngModel)]="sortByTitleParam" [style]="dropdownStyle">
+            <ng-template pTemplate="item" let-item>
+              {{ item.label }}
+            </ng-template>
+            <ng-template let-item pTemplate="selectedItem">
+              {{ item.label }}
+           </ng-template>
+          </p-dropdown>
+        </div>
+        <div class="sort-option">
+          <span class="option-text">추가일</span>
+          <p-dropdown [options]="sortByCreatedDateOption" [(ngModel)]="sortByCreatedDateParam" [style]="dropdownStyle">
+            <ng-template pTemplate="item" let-item>
+              {{ item.label }}
+            </ng-template>
+            <ng-template let-item pTemplate="selectedItem">
+              {{ item.label }}
+           </ng-template>
+          </p-dropdown>
+        </div>
+        <div class="sort-option">
+          <span class="option-text">선곡횟수</span>
+          <p-dropdown [options]="sortByPickCountOption" [(ngModel)]="sortByPickCountParam" [style]="dropdownStyle">
             <ng-template pTemplate="item" let-item>
               {{ item.label }}
             </ng-template>
@@ -33,6 +57,9 @@
           </p-dropdown>
         </div>
       </div>
+    </div>
+    <div *ngIf="authenticated" class="table-container">
+      
     </div>
   </div>
 </div>

@@ -1,6 +1,6 @@
-import { GetBoothSortParam } from './GetBoothSortParam';
+import { PlayHistorySortParam } from './PlayHistorySortParam';
 
 export interface SortOption {
   label: string;
-  value: GetBoothSortParam;
+  value: PlayHistorySortParam;
 }
