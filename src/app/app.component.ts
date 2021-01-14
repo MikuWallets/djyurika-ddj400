@@ -11,14 +11,14 @@ export class AppComponent {
   title = 'djyurika-ddj400';
 
   public dropdownStyle = {
-    "width": '150px'
+    width: '150px'
   };
 
-  public inputKey: string = '';
-  
-  public authenticated: boolean = false;
-  public authFailed: boolean = false;
-  
+  public inputKey = '';
+
+  public authenticated = false;
+  public authFailed = false;
+
   public readonly Sort = PlayHistorySortParam;
   public filterByReviewedParam: PlayHistorySortParam;
   public sortByTitleParam: PlayHistorySortParam;

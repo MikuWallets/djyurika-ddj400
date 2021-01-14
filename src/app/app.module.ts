@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { PrimeModule } from "app/shared";
+import { PrimeModule } from 'app/shared';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';

@@ -1,4 +1,4 @@
-import * as pass from "./pass.json";
+import * as pass from './pass.json';
 
 export const environment = {
   production: true,
