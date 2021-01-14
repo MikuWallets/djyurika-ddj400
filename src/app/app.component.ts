@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { environment } from 'environments/environment';
-import { PlayHistorySortParam } from './core/types/PlayHistorySortParam';
-import { SortOption } from './core/types/SortOption';
+import { PlayHistorySortParam, SortOption } from './core/types';
 
 @Component({
   selector: 'kawaii-yurika',
@@ -10,7 +9,7 @@ import { SortOption } from './core/types/SortOption';
 })
 export class AppComponent {
   title = 'djyurika-ddj400';
-  
+
   public dropdownStyle = {
     "width": '150px'
   };
