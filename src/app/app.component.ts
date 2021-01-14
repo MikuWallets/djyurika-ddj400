@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { environment } from 'environments/environment';
 import { PlayHistorySortParam } from './core/types/PlayHistorySortParam';
 import { SortOption } from './core/types/SortOption';
 
@@ -56,6 +57,17 @@ export class AppComponent {
   }
 
   public search() {
+    this.authenticated = this.authUser();
+    if (!this.authenticated) {
+      this.authFailed = true;
+      return;
+    }
 
+    this.authFailed = false;
+    alert('success');
+  }
+
+  private authUser(): boolean {
+    return this.inputKey === environment.apiKey;
   }
 }
