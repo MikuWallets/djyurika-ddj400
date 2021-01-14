@@ -4,7 +4,7 @@
     <div class="admin-key">
       <div>
         <span>Admin Key</span>
-        <input type="password" pPassword [(ngModel)]="apiKey" [feedback]="false" />
+        <input type="password" pPassword [(ngModel)]="inputKey" [feedback]="false" />
         <button pButton type="button" label="Search" (click)="search()"></button>
         <div *ngIf="authFailed" class="failed">Authentication failed</div>
       </div>

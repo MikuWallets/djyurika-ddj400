@@ -3,14 +3,18 @@ import { PlayHistorySortParam } from './core/types/PlayHistorySortParam';
 import { SortOption } from './core/types/SortOption';
 
 @Component({
-  selector: 'app-root',
+  selector: 'kawaii-yurika',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   title = 'djyurika-ddj400';
   
-  public apiKey: string = '';
+  public dropdownStyle = {
+    "width": '150px'
+  };
+
+  public inputKey: string = '';
   
   public authenticated: boolean = false;
   public authFailed: boolean = false;
@@ -20,11 +24,6 @@ export class AppComponent {
   public sortByTitleParam: PlayHistorySortParam;
   public sortByCreatedDateParam: PlayHistorySortParam;
   public sortByPickCountParam: PlayHistorySortParam;
-
-  public dropdownStyle = {
-    "width": '150px'
-  };
-  public checkValue: SortOption[];
 
   public filterByReviewedOption: SortOption[];
   public sortByTitleOption: SortOption[];
