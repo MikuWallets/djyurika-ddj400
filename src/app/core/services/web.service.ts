@@ -36,9 +36,9 @@ export class WebService {
       'X-ACCESS-KEY': apiKey,
     });
 
-    return this.http.post(`${this.apiUrl}/restart`, {
+    return this.http.post(`${this.apiUrl}/restart`, null, {
       headers,
-      observe: 'body',
+      responseType: 'text',
     }) as Observable<string>;
   }
 

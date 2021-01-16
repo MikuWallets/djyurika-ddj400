@@ -80,7 +80,6 @@ export class AppComponent {
       },
       (err: HttpErrorResponse) => {
         this.failMessage = err.status + ' ' + err.error.message;
-        this.authenticated = false;
         this.authFailed = true;
         this.cdRef.markForCheck();
       }
@@ -99,8 +98,9 @@ export class AppComponent {
       },
       (err: HttpErrorResponse) => {
         this.failMessage = err.status + ' ' + err.error.message;
+        this.authFailed = true;
         this.cdRef.markForCheck();
-      }
+      },
     );
   }
 

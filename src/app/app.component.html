@@ -67,7 +67,7 @@
         <button pButton type="button" class="p-button-success" label="Commit" (click)="commit()"></button>
       </div>
     </div>
-    <div *ngIf="authenticated || true" class="table-container">
+    <div *ngIf="authenticated" class="table-container">
       <div class="song-item column">
         <p-checkbox class="reviewed" [binary]="true" [(ngModel)]="checkedAll" (onChange)="toggleAllSongs()"></p-checkbox> <!--reviewed-->
         <div class="id">Song ID</div>
