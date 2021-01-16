@@ -3,11 +3,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { PrimeModule } from 'app/shared';
+import { PrimeModule } from './shared';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { CoreModule } from './core/core.module';
+import { APP_BASE_HREF } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { CoreModule } from './core/core.module';
     PrimeModule,
     CoreModule,
   ],
-  providers: [],
+  providers: [{provide: APP_BASE_HREF, useValue: '/admin/'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
