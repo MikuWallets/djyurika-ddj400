@@ -1,0 +1,15 @@
+#location ^~ /admin {
+location = /admin {
+  root /volume1/web/djyurika-admintool/;
+  try_files $uri$args $uri$args/ /index.html;
+}
+
+location = /admin/ {
+  root /volume1/web/djyurika-admintool/;
+  try_files $uri$args $uri$args/ /index.html;
+}
+
+
+location = / {
+  return 302 https://discord.gg/HH9VQD8;
+}
