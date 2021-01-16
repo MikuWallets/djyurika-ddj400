@@ -1,15 +1,10 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-import * as pass from './pass.json';
 
 export const environment = {
+  apiUrl: '/api/v1',
   production: false,
-  apiKey: pass.apiKey,
-  account: pass.db.credential,
-  host: '192.168.39.1',
-  port: 32824,
-  db: pass.db.dbName
 };
 
 /*

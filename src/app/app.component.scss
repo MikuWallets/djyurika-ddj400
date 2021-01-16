@@ -8,9 +8,8 @@
 }
 
 .content {
-  margin-top: $navbarHeight;
   padding: $contentPaddingHeight 60px $contentPaddingBottom;
-  min-height: calc(100vh - #{$navbarHeight} - #{$contentPaddingHeight} - #{$contentPaddingBottom});
+  // min-width: 930px;
 }
 
 .container {
@@ -28,7 +27,11 @@
   input {
     margin: 0 20px;
     width: 60%;
-    max-width: 500px;
+    max-width: 300px;
+  }
+
+  button + button {
+    margin-left: 10px;
   }
 
   .failed {
@@ -40,6 +43,11 @@
 .table-container {
   background: linear-gradient(hsla(0,0%,90%,.8),hsla(0,0%,90%,.8));
   border: 2px solid rgb(90, 185, 187);
+  padding: 5px;
+}
+
+.option-group {
+  display: inline-block;
 }
 
 .sort-option-container {
@@ -62,6 +70,77 @@
 .option-text {
   display: inline-block;
   padding: 0 10px;
-  width: 90px;
+  width: 85px;
   text-align: right;
+}
+
+.song-item-container {
+  border-top: gray 2px solid;
+  border-bottom: gray 2px solid;
+  margin-bottom: 10px;
+  padding: 10px 0;
+}
+
+.song-item {
+  font-family: 'Roboto Mono', monospace;
+  width: 100%;
+  position: relative;
+  margin: 8px 0;
+
+  > * {
+    vertical-align: top;
+  }
+
+  &.column {
+    margin: 10px 0;
+  }
+
+  .reviewed {
+    margin: 0 5px;
+    display: inline-block;
+    width: 20px;
+  }
+  
+  .id {
+    margin: 0 5px;
+    width: 135px;
+    display: inline-block;
+    
+    a {
+      color: initial;
+      text-decoration: none;
+    }
+    .fa-youtube {
+      color: red;
+    }
+  }
+  
+  .title {
+    margin: 0 5px;
+    display: inline-block;
+    width: calc(100% - 550px);
+    min-width: 220px;
+  }
+
+  .playcount {
+    margin: 0 5px;
+    display: inline-block;
+    width: 40px;
+  }
+  .pickcount {
+    margin: 0 5px;
+    display: inline-block;
+    width: 40px;
+  }
+  .created {
+    margin: 0 5px;
+    display: inline-block;
+    width: 80px;
+  }
+  .last-played {
+    margin: 0 5px;
+    display: inline-block;
+    width: 165px;
+  }
+
 }

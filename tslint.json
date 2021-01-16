@@ -19,13 +19,14 @@
     "directive-selector": [
       true,
       "attribute",
-      "app",
+      "dj",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "app",
+      "dj",
+      "kawaii-yurika",
       "kebab-case"
     ],
     "eofline": true,

@@ -7,6 +7,7 @@ import { PrimeModule } from 'app/shared';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { NavComponent } from './nav/nav.component';
     BrowserAnimationsModule,
     FormsModule,
     PrimeModule,
+    CoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
