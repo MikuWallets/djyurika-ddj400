@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
-import { PagedSongList, PlayHistorySortParam } from '../types/';
+import { PagedSongList, PlayHistorySortParam, Song } from '../types/';
 
 @Injectable()
 export class WebService {
@@ -38,7 +38,7 @@ export class WebService {
 
     return this.http.post(`${this.apiUrl}/restart`, null, {
       headers,
-      responseType: 'text',
+      responseType: 'json',
     }) as Observable<string>;
   }
 
@@ -60,6 +60,6 @@ export class WebService {
       headers,
       observe: 'body',
       responseType: 'json',
-    }) as Observable<any>;
+    }) as Observable<Array<Song>>;
   }
 }
