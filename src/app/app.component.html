@@ -3,7 +3,7 @@
   <h2><s>모바일 생각안함 되긴하는데 이쁜건 아무튼 안됨</s></h2>
   <div class="container">
     <div class="admin-key">
-      <div>
+      <div class="input-area">
         <span>Admin Key</span>
         <input type="password" pPassword [(ngModel)]="inputKey" [feedback]="false" />
         <div *ngIf="authFailed" class="failed">{{ failMessage }}</div>
@@ -62,9 +62,9 @@
         </div>
       </div>
       <div>
-        <button pButton type="button" class="p-button-warning" label="Restart" (click)="restart()"></button>
-        <button pButton type="button" label="Search" (click)="search(1, fetchCount)" style="width: 120px;"></button>
-        <button pButton type="button" class="p-button-success" label="Commit" (click)="commit()"></button>
+        <div class="button-container"><button pButton type="button" class="p-button-warning" label="Restart" (click)="restart()"></button></div>
+        <div class="button-container main"><button pButton type="button" class="p-button-lg" label="Search" (click)="search(1, fetchCount)"></button></div>
+        <div class="button-container"><button pButton type="button" class="p-button-success" label="Commit" (click)="commit()"></button></div>
       </div>
     </div>
     <div *ngIf="authenticated" class="table-container">

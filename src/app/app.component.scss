@@ -8,7 +8,7 @@
 }
 
 .content {
-  padding: $contentPaddingHeight 60px $contentPaddingBottom;
+  padding: $contentPaddingHeight 20px $contentPaddingBottom;
   // min-width: 930px;
 }
 
@@ -24,10 +24,37 @@
   padding: 10px;
   margin-bottom: 30px;
   
-  input {
-    margin: 0 20px;
-    width: 60%;
-    max-width: 300px;
+  .input-area {
+    > * + * {
+      margin-left: 20px;
+    }
+
+    input {
+      width: 60%;
+      max-width: 300px;
+    }
+  }
+
+  .button-container {
+    display: inline-block;
+    margin: 0 10px;
+
+    button {
+      width: 100%;
+    }
+
+    &.main {
+      width: 130px;
+    }
+
+    @media (max-width: 450px) {
+      display: block;
+      margin: 15px 10px;
+
+      &.main {
+        width: initial;
+      }
+    }
   }
 
   button + button {
