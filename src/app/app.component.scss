@@ -145,7 +145,7 @@
   .title {
     margin: 0 5px;
     display: inline-block;
-    width: calc(100% - 550px);
+    width: calc(100% - 585px);
     min-width: 220px;
   }
 
@@ -168,6 +168,17 @@
     margin: 0 5px;
     display: inline-block;
     width: 165px;
+  }
+  .delete {
+    margin: 0 5px;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    
+    button {
+      width: 100%;
+      height: 100%;
+    }
   }
 
 }

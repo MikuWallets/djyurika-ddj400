@@ -40,6 +40,7 @@ export class AppComponent {
 
   checkedAll: boolean;
   fetchCount = 30;
+  private currentPage: number;
 
   public constructor(
     private cdRef: ChangeDetectorRef,
@@ -68,6 +69,7 @@ export class AppComponent {
   }
 
   public search(page: number, fetchCount: number) {
+    this.currentPage = page;
     this.fetchCount = fetchCount;
     this.applySortOption();
     this.webService.getList(this.inputKey, page, fetchCount, this.sortParam).subscribe(
@@ -87,21 +89,44 @@ export class AppComponent {
   }
 
   public commit() {
-    console.log('commit');
+    let confirmed = confirm('체크한 곡들을 확인 처리합니다. 기 확인처리된 곡은 체크 해제되어 있어도 취소되지 않습니다.');
+    if (confirmed) {
+      // commit
+    }
   }
 
   public restart() {
-    this.webService.sendRestart(this.inputKey).subscribe(
-      res => {
-        console.log(res);
-        alert('Success');
-      },
-      (err: HttpErrorResponse) => {
-        this.failMessage = err.status + ' ' + err.error.message;
-        this.authFailed = true;
-        this.cdRef.markForCheck();
-      },
-    );
+    let confirmed = confirm('DJ 유리카를 재시작합니다.');
+    if (confirmed) {
+      this.webService.sendRestart(this.inputKey).subscribe(
+        res => {
+          console.log(res);
+          alert('Success');
+        },
+        (err: HttpErrorResponse) => {
+          this.failMessage = err.status + ' ' + err.error.message;
+          this.authFailed = true;
+          this.cdRef.markForCheck();
+        },
+      );
+    }
+  }
+
+  public removeSong(id: string) {
+    let confirmed = confirm(`곡 ID '${id}'를 삭제합니다.`);
+    if (confirmed) {
+      this.webService.removeSong(this.inputKey, id).subscribe(
+        res => {
+          alert('Delete success');
+          this.search(this.currentPage, this.fetchCount);
+        },
+        err => {
+          this.failMessage = err.status + ' ' + err.error.message;
+          this.authFailed = true;
+          this.cdRef.markForCheck();
+        }
+      )
+    }
   }
 
   public makeYoutubeLink(id: string) {

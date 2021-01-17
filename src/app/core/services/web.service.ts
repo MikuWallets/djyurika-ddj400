@@ -42,4 +42,12 @@ export class WebService {
     }) as Observable<string>;
   }
 
+  public removeSong(apiKey: string, id: string) {
+    const headers = new HttpHeaders({
+      'X-ACCESS-KEY': apiKey,
+    });
+    return this.http.delete(`${this.apiUrl}/song/${id}`,{
+      headers,
+    }) as Observable<any>;
+  }
 }
