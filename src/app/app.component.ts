@@ -91,7 +91,24 @@ export class AppComponent {
   public commit() {
     let confirmed = confirm('체크한 곡들을 확인 처리합니다. 기 확인처리된 곡은 체크 해제되어 있어도 취소되지 않습니다.');
     if (confirmed) {
-      // commit
+      const targetSongIdList = new Array<string>();
+      this.songList.forEach(song => {
+        if (song.reviewed) {
+          targetSongIdList.push(song.id);
+        }
+      });
+      
+      this.webService.reviewSong(this.inputKey, targetSongIdList).subscribe(
+        res => {
+          alert(`${targetSongIdList.length}곡 요청, 새로 ${res.length}곡이 업데이트 되었습니다.`);
+          this.search(this.currentPage, this.fetchCount);
+        },
+        (err: HttpErrorResponse) => {
+          this.failMessage = err.status + ' ' + err.error.message;
+          this.authFailed = true;
+          this.cdRef.markForCheck();
+        }
+      );
     }
   }
 
@@ -117,8 +134,8 @@ export class AppComponent {
     if (confirmed) {
       this.webService.removeSong(this.inputKey, id).subscribe(
         res => {
-          alert('Delete success');
           this.search(this.currentPage, this.fetchCount);
+          alert('Delete success');
         },
         err => {
           this.failMessage = err.status + ' ' + err.error.message;

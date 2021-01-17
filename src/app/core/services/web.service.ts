@@ -50,4 +50,16 @@ export class WebService {
       headers,
     }) as Observable<any>;
   }
+
+  public reviewSong(apiKey: string, ids: Array<string>) {
+    const headers = new HttpHeaders({
+      'X-ACCESS-KEY': apiKey,
+    });
+
+    return this.http.patch(`${this.apiUrl}/song`, ids, {
+      headers,
+      observe: 'body',
+      responseType: 'json',
+    }) as Observable<any>;
+  }
 }
