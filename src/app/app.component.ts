@@ -20,6 +20,8 @@ export class AppComponent {
   public totalElements: number;
 
   public inputKey = '';
+  public inputID = '';
+  public idSelected = false;
   public failMessage = '';
 
   public authenticated = false;
@@ -68,7 +70,37 @@ export class AppComponent {
     ];
   }
 
-  public search(page: number, fetchCount: number) {
+  public searchClick() {
+    if (this.inputID) {
+      this.searchById(this.inputID);
+    }
+    else {
+      this.searchAll(1, this.fetchCount);
+    }
+  }
+
+  public searchById(id: string) {
+    this.webService.getListBySongID(this.inputKey, id).subscribe(
+      res => {
+        this.authenticated = true;
+        this.authFailed = false;
+        this.idSelected = true;
+        if (!this.songList) {
+          this.songList = new Array<Song>();
+        }
+        this.songList.length = 0;
+        this.songList.push(res);
+        this.cdRef.markForCheck();
+      },
+      (err: HttpErrorResponse) => {
+        this.failMessage = err.status + ' ' + err.error.message;
+        this.authFailed = true;
+        this.cdRef.markForCheck();
+      }
+    );
+  }
+
+  public searchAll(page: number, fetchCount: number) {
     this.currentPage = page;
     this.fetchCount = fetchCount;
     this.applySortOption();
@@ -76,6 +108,7 @@ export class AppComponent {
       res => {
         this.authenticated = true;
         this.authFailed = false;
+        this.idSelected = false;
         this.songList = res.list;
         this.totalElements = res.totalElements;
         this.cdRef.markForCheck();
@@ -101,7 +134,7 @@ export class AppComponent {
       this.webService.reviewSong(this.inputKey, targetSongIdList).subscribe(
         res => {
           alert(`${targetSongIdList.length}곡 요청, 새로 ${res.length}곡이 업데이트 되었습니다.`);
-          this.search(this.currentPage, this.fetchCount);
+          this.searchAll(this.currentPage, this.fetchCount);
         },
         (err: HttpErrorResponse) => {
           this.failMessage = err.status + ' ' + err.error.message;
@@ -134,7 +167,7 @@ export class AppComponent {
     if (confirmed) {
       this.webService.removeSong(this.inputKey, id).subscribe(
         res => {
-          this.search(this.currentPage, this.fetchCount);
+          this.searchAll(this.currentPage, this.fetchCount);
           alert('Delete success');
         },
         err => {
