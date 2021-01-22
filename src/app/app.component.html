@@ -92,7 +92,7 @@
           <div class="playcount">{{ song.playCount }}</div>
           <div class="pickcount">{{ song.pickCount }}</div>
           <div class="created">{{ song.createdAt | date:'yy-MM-dd' }}</div>
-          <div class="last-played">{{ song.lastPlayedAt | date:'yy-MM-dd hh:mm:ss' }}</div>
+          <div class="last-played">{{ song.lastPlayedAt | date:'yy-MM-dd HH:mm:ss' }}</div>
           <div class="delete">
             <button pButton type="button" class="p-button-danger p-button-sm" label="" icon="fas fa-trash-alt" (click)="removeSong(song.id)"></button>
           </div>

@@ -42,7 +42,7 @@ export class AppComponent {
 
   checkedAll: boolean;
   fetchCount = 30;
-  private currentPage: number;
+  private currentPage = 1;
 
   public constructor(
     private cdRef: ChangeDetectorRef,
@@ -170,7 +170,7 @@ export class AppComponent {
           this.searchAll(this.currentPage, this.fetchCount);
           alert('Delete success');
         },
-        err => {
+        (err: HttpErrorResponse) => {
           this.failMessage = err.status + ' ' + err.error.message;
           this.authFailed = true;
           this.cdRef.markForCheck();

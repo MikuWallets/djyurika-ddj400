@@ -35,13 +35,9 @@ export class WebService {
     const headers = new HttpHeaders({
       'X-ACCESS-KEY': apiKey,
     });
-    const params = {
-      id: id
-    };
 
     return this.http.get(`${this.apiUrl}/song/${id}`, {
       headers,
-      params,
       observe: 'body',
       responseType: 'json',
     }) as Observable<Song>;
