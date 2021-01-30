@@ -31,6 +31,18 @@ export class WebService {
     }) as Observable<PagedSongList>;
   }
 
+  public getListBySongID(apiKey: string, id: string) {
+    const headers = new HttpHeaders({
+      'X-ACCESS-KEY': apiKey,
+    });
+
+    return this.http.get(`${this.apiUrl}/song/${id}`, {
+      headers,
+      observe: 'body',
+      responseType: 'json',
+    }) as Observable<Song>;
+  }
+
   public sendRestart(apiKey: string) {
     const headers = new HttpHeaders({
       'X-ACCESS-KEY': apiKey,
