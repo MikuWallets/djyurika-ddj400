@@ -34,3 +34,14 @@
 .nav-title {
   font-family: 'Overpass', sans-serif;
 }
+
+.rotate {
+  animation: rotate_image 10s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+@keyframes rotate_image {
+  100% {
+    transform: rotate(360deg);
+  }
+}
