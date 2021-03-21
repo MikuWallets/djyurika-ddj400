@@ -6,23 +6,28 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PrimeModule } from './shared';
 
 import { AppComponent } from './app.component';
-import { NavComponent } from './nav/nav.component';
 import { CoreModule } from './core/core.module';
-import { APP_BASE_HREF } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { MainComponent } from './main/main.component';
+import { AppRoutingModule } from './app.routing.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavComponent,
+    MainComponent,
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     PrimeModule,
     CoreModule,
+    CommonModule,
   ],
-  providers: [{provide: APP_BASE_HREF, useValue: '/admin/'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
