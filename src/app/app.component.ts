@@ -1,7 +1,8 @@
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormGroup} from '@angular/forms';
 import { WebService } from './core/services';
-import { PlayHistorySortParam, Song, SortOption } from './core/types';
+import { Guild, PlayHistorySortParam, ServerOption, Song, SongSource, SortOption } from './core/types';
 
 @Component({
   selector: 'kawaii-yurika',
@@ -9,34 +10,43 @@ import { PlayHistorySortParam, Song, SortOption } from './core/types';
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'djyurika-ddj400';
+  songSource = SongSource;
 
   public dropdownStyle = {
-    width: '170px'
+    width: '200px'
   };
 
   public songList: Array<Song>;
   public totalElements: number;
+  public guildList = new Map<string, Guild>();
 
   public inputKey = '';
   public inputID = '';
   public idSelected = false;
   public failMessage = '';
 
+  public formClass = { submitted: false };
+  public formGroup: FormGroup;
+
   public authenticated = false;
   public authFailed = false;
 
   public readonly Sort = PlayHistorySortParam;
+  public serverSelectParam: string;
   public sortByReviewedParam: PlayHistorySortParam;
   public sortByTitleParam: PlayHistorySortParam;
   public sortByCreatedDateParam: PlayHistorySortParam;
   public sortByPickCountParam: PlayHistorySortParam;
+  public sortByRecentPlayDateParam: PlayHistorySortParam;
 
+  public serverSelectOption: ServerOption[] = [];
   public sortByReviewedOption: SortOption[];
   public sortByTitleOption: SortOption[];
   public sortByCreatedDateOption: SortOption[];
   public sortByPickCountOption: SortOption[];
+  public sortByRecentPlayDateOption: SortOption[];
 
   public sortParam: PlayHistorySortParam[] = [];
 
@@ -46,7 +56,7 @@ export class AppComponent {
 
   public constructor(
     private cdRef: ChangeDetectorRef,
-    private webService: WebService
+    private webService: WebService,
     ) {
     this.sortByReviewedOption = [
       { label: '해당없음', value: null },
@@ -68,6 +78,23 @@ export class AppComponent {
       { label: '오름차순', value: this.Sort.PICK_ASC },
       { label: '내림차순', value: this.Sort.PICK_DESC }
     ];
+    this.sortByRecentPlayDateOption = [
+      { label: '해당없음', value: null },
+      { label: '오름차순', value: this.Sort.RECENTPLAYED_ASC },
+      { label: '내림차순', value: this.Sort.RECENTPLAYED_DESC }
+    ];
+    this.serverSelectOption = [
+      { label: '전체선택', value: null },
+    ]
+  }
+
+  public ngOnInit(): void {
+    this.webService.getServerList().subscribe(guilds => {
+      guilds.forEach(guild => {
+        this.guildList.set(guild.server, guild);
+        this.serverSelectOption.push({ label: guild.name, value: guild.server });
+      });
+    });
   }
 
   public searchClick() {
@@ -80,7 +107,7 @@ export class AppComponent {
   }
 
   public searchById(id: string) {
-    this.webService.getListBySongID(this.inputKey, id).subscribe(
+    this.webService.getListBySongID(this.inputKey, id, this.serverSelectParam).subscribe(
       res => {
         this.authenticated = true;
         this.authFailed = false;
@@ -89,7 +116,7 @@ export class AppComponent {
           this.songList = new Array<Song>();
         }
         this.songList.length = 0;
-        this.songList.push(res);
+        res.forEach(s => this.songList.push(s));
         this.cdRef.markForCheck();
       },
       (err: HttpErrorResponse) => {
@@ -104,7 +131,7 @@ export class AppComponent {
     this.currentPage = page;
     this.fetchCount = fetchCount;
     this.applySortOption();
-    this.webService.getList(this.inputKey, page, fetchCount, this.sortParam).subscribe(
+    this.webService.getList(this.inputKey, page, fetchCount, this.serverSelectParam, this.sortParam).subscribe(
       res => {
         this.authenticated = true;
         this.authFailed = false;
@@ -122,7 +149,7 @@ export class AppComponent {
   }
 
   public commit() {
-    let confirmed = confirm('체크한 곡들을 확인 처리합니다. 기 확인처리된 곡은 체크 해제되어 있어도 취소되지 않습니다.');
+    let confirmed = confirm('체크한 곡들을 확인 처리합니다. 동일 곡 모든 서버에 적용되며, 기 확인처리된 곡은 체크 해제되어 있어도 취소되지 않습니다.');
     if (confirmed) {
       const targetSongIdList = new Array<string>();
       this.songList.forEach(song => {
@@ -162,10 +189,10 @@ export class AppComponent {
     }
   }
 
-  public removeSong(id: string) {
-    let confirmed = confirm(`곡 ID '${id}'를 삭제합니다.`);
+  public removeSong(song: Song) {
+    let confirmed = confirm(`${this.guildList.get(song.guild).name}에서 '${song.title}'(${song.id})를 삭제합니다.`);
     if (confirmed) {
-      this.webService.removeSong(this.inputKey, id).subscribe(
+      this.webService.removeSong(this.inputKey, song.regNo).subscribe(
         res => {
           this.searchAll(this.currentPage, this.fetchCount);
           alert('Delete success');
@@ -179,8 +206,16 @@ export class AppComponent {
     }
   }
 
+  public getServerName(guild: string) {
+    return this.guildList.get(guild).name;
+  }
+
   public makeYoutubeLink(id: string) {
     return `https://youtu.be/${id}`;
+  }
+
+  public makeSoundcloudLink(id: string) {
+
   }
 
   public toggleAllSongs() {
@@ -195,5 +230,6 @@ export class AppComponent {
     if (this.sortByTitleParam) { this.sortParam.push(this.sortByTitleParam); }
     if (this.sortByPickCountParam) { this.sortParam.push(this.sortByPickCountParam); }
     if (this.sortByCreatedDateParam) { this.sortParam.push(this.sortByCreatedDateParam); }
+    if (this.sortByRecentPlayDateParam) { this.sortParam.push(this.sortByRecentPlayDateParam); }
   }
 }

@@ -102,7 +102,7 @@
 .option-text {
   display: inline-block;
   padding: 0 10px;
-  width: 85px;
+  width: 100px;
   text-align: right;
 }
 
@@ -145,13 +145,22 @@
     .fa-youtube {
       color: red;
     }
+    .fa-soundcloud {
+      color: #ff7700;
+    }
   }
   
   .title {
     margin: 0 5px;
     display: inline-block;
-    width: calc(100% - 585px);
+    width: calc(100% - 755px);  // all width and margins
     min-width: 220px;
+  }
+
+  .guild {
+    margin: 0 5px;
+    display: inline-block;
+    width: 160px;
   }
 
   .playcount {

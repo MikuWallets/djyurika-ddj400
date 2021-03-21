@@ -1,4 +1,7 @@
+import { SongSource } from ".";
+
 export class Song {
+  regNo: number;
   id: string;
   title?: string;
   reviewed: boolean;
@@ -6,4 +9,6 @@ export class Song {
   pickCount: number;
   createdAt?: Date;
   lastPlayedAt?: Date;
+  source: SongSource;
+  guild: string;
 }

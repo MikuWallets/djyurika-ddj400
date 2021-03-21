@@ -14,6 +14,17 @@
         </div>
         <div class="option-group">
           <div class="sort-option">
+            <span class="option-text">서버 선택</span>
+            <p-dropdown [options]="serverSelectOption" [(ngModel)]="serverSelectParam" [style]="dropdownStyle">
+              <ng-template pTemplate="item" let-item>
+                {{ item.label }}
+              </ng-template>
+              <ng-template let-item pTemplate="selectedItem">
+                {{ item.label }}
+             </ng-template>
+            </p-dropdown>
+          </div>
+          <div class="sort-option">
             <span class="option-text">확인여부</span>
             <p-dropdown [options]="sortByReviewedOption" [(ngModel)]="sortByReviewedParam" [style]="dropdownStyle">
               <ng-template pTemplate="item" let-item>
@@ -24,6 +35,9 @@
              </ng-template>
             </p-dropdown>
           </div>
+        </div>
+       
+        <div class="option-group">
           <div class="sort-option">
             <span class="option-text">제목</span>
             <p-dropdown [options]="sortByTitleOption" [(ngModel)]="sortByTitleParam" [style]="dropdownStyle">
@@ -35,8 +49,6 @@
              </ng-template>
             </p-dropdown>
           </div>
-        </div>
-        <div class="option-group">
           <div class="sort-option">
             <span class="option-text">추가일</span>
             <p-dropdown [options]="sortByCreatedDateOption" [(ngModel)]="sortByCreatedDateParam" [style]="dropdownStyle">
@@ -48,9 +60,22 @@
              </ng-template>
             </p-dropdown>
           </div>
+        </div>
+        <div class="option-group">
           <div class="sort-option">
             <span class="option-text">선곡횟수</span>
             <p-dropdown [options]="sortByPickCountOption" [(ngModel)]="sortByPickCountParam" [style]="dropdownStyle">
+              <ng-template pTemplate="item" let-item>
+                {{ item.label }}
+              </ng-template>
+              <ng-template let-item pTemplate="selectedItem">
+                {{ item.label }}
+             </ng-template>
+            </p-dropdown>
+          </div>
+          <div class="sort-option">
+            <span class="option-text">최근 재생일</span>
+            <p-dropdown [options]="sortByRecentPlayDateOption" [(ngModel)]="sortByRecentPlayDateParam" [style]="dropdownStyle">
               <ng-template pTemplate="item" let-item>
                 {{ item.label }}
               </ng-template>
@@ -75,6 +100,7 @@
       <div class="song-item column">
         <p-checkbox class="reviewed" [binary]="true" [(ngModel)]="checkedAll" (onChange)="toggleAllSongs()"></p-checkbox> <!--reviewed-->
         <div class="id">Song ID</div>
+        <div class="guild">Server</div>
         <div class="title">Title</div>
         <div class="playcount">Play</div>
         <div class="pickcount">Pick</div>
@@ -85,16 +111,18 @@
       <div class="song-item-container">
         <div *ngFor="let song of songList" class="song-item">
           <p-checkbox [(ngModel)]="song.reviewed" class="reviewed" [binary]="true"></p-checkbox> <!--reviewed-->
-          <div class="id">
-            <a [href]="makeYoutubeLink(song.id)" target="_blank"><i class="fab fa-youtube"></i> {{ song.id }}</a>
+          <div class="id" [ngSwitch]="song.source">
+            <a *ngSwitchCase="songSource.YOUTUBE" [href]="makeYoutubeLink(song.id)" target="_blank"><i class="fab fa-youtube"></i> {{ song.id }}</a>
+            <a *ngSwitchCase="songSource.SOUNDCLOUD" [href]="makeSoundcloudLink(song.id)" target="_blank"><i class="fab fa-soundcloud"></i> {{ song.id }}</a>
           </div>
+          <div class="guild">{{ getServerName(song.guild) }}</div>
           <div class="title">{{ song.title }}</div>
           <div class="playcount">{{ song.playCount }}</div>
           <div class="pickcount">{{ song.pickCount }}</div>
           <div class="created">{{ song.createdAt | date:'yy-MM-dd' }}</div>
           <div class="last-played">{{ song.lastPlayedAt | date:'yy-MM-dd HH:mm:ss' }}</div>
           <div class="delete">
-            <button pButton type="button" class="p-button-danger p-button-sm" label="" icon="fas fa-trash-alt" (click)="removeSong(song.id)"></button>
+            <button pButton type="button" class="p-button-danger p-button-sm" label="" icon="fas fa-trash-alt" (click)="removeSong(song)"></button>
           </div>
         </div>  
       </div>

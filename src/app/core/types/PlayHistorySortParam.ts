@@ -10,4 +10,7 @@ export enum PlayHistorySortParam {
 
   PICK_ASC = 'pickCount,asc',
   PICK_DESC = 'pickCount,desc',
+
+  RECENTPLAYED_ASC = 'lastPlayedAt,asc',
+  RECENTPLAYED_DESC = 'lastPlayedAt,desc',
 }
