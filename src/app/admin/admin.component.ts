@@ -212,10 +212,6 @@ export class AdminComponent implements OnInit {
     return `https://youtu.be/${id}`;
   }
 
-  public makeSoundcloudLink(id: string) {
-
-  }
-
   public toggleAllSongs() {
     this.songList.forEach(s => {
       s.reviewed = this.checkedAll;

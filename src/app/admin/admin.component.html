@@ -112,8 +112,14 @@
         <div *ngFor="let song of songList" class="song-item">
           <p-checkbox [(ngModel)]="song.reviewed" class="reviewed" [binary]="true"></p-checkbox> <!--reviewed-->
           <div class="id" [ngSwitch]="song.source">
-            <a *ngSwitchCase="songSource.YOUTUBE" [href]="makeYoutubeLink(song.id)" target="_blank"><i class="fab fa-youtube"></i> {{ song.id }}</a>
-            <a *ngSwitchCase="songSource.SOUNDCLOUD" [href]="makeSoundcloudLink(song.id)" target="_blank"><i class="fab fa-soundcloud"></i> {{ song.id }}</a>
+            <ng-container *ngIf="song.url; else nourl">
+              <a *ngSwitchCase="songSource.YOUTUBE" [href]="song.url" target="_blank"><i class="fab fa-youtube"></i> {{ song.id }}</a>
+              <a *ngSwitchCase="songSource.SOUNDCLOUD" [href]="song.url" target="_blank"><i class="fab fa-soundcloud"></i> {{ song.id }}</a>
+            </ng-container>
+            <ng-template #nourl>
+              <a *ngSwitchCase="songSource.YOUTUBE" [href]="makeYoutubeLink(song.id)"><i class="fab fa-youtube"></i> {{ song.id }}</a>
+              <a *ngSwitchCase="songSource.SOUNDCLOUD"><i class="fab fa-soundcloud"></i> {{ song.id }}</a>
+            </ng-template>
           </div>
           <div class="guild">{{ getServerName(song.guild) }}</div>
           <div class="title">{{ song.title }}</div>
